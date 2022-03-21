@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Data.Infrastructure
+namespace PS.Data.Infrastructure
 {
-    public interface IUnitOfWork: IDisposable
+    public interface IUnitOfWork : IDisposable
     {
-        public void Commit();
-        public IRepositoryBase<T> GetRepository<T>() where T: class;
+        void Commit();
+        //void Dispose(); Hidden from IDisposable interface
+        IRepositoryBase<T> getRepository<T>() where T : class;
     }
 }

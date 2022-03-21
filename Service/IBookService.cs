@@ -1,4 +1,5 @@
 ﻿using Domain;
+using ServicePattern;
 
 namespace Service
 {

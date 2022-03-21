@@ -1,4 +1,6 @@
 ﻿using Domain;
+using PS.Data.Infrastructure;
+using ServicePattern;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +8,10 @@ namespace Service
 {
     public class BorrowService: Service<Borrow>, IBorrowService
     {
+        public BorrowService(IUnitOfWork uow) : base(uow)
+        {
+
+        }
 
         public bool Borrowable(Document document)
         {
@@ -21,15 +27,19 @@ namespace Service
 
         }
 
-        public void Borrow(Document document, Client client)
+        public bool Borrowed(Document document)
+        {   
+            if (this.GetMany(b => b.DocumentFK == document.Key).Where(b => b.ReturnDate == null).Count() == 1)
+                return true;
+
+            return false;
+        }
+
+        public bool Borrow(Document document, Client client)
         {
-            bool borrowed = true;
-            if (this.GetMany(b => b.DocumentFK == document.Key) == null)
-                borrowed = false;
-            else if (this.GetMany(b => b.DocumentFK == document.Key).Where(b => b.ReturnDate == null).Count() == 1)
+            bool borrowed = false;
+            if (this.GetMany(b => b.DocumentFK == document.Key).Where(b => b.ReturnDate == null).Count() == 1)
                 borrowed = true;
-            else if (this.GetMany(b => b.DocumentFK == document.Key).Where(b => b.ReturnDate == null).Count() == 0)
-                borrowed = false;
 
             if (!borrowed)
             {
@@ -40,10 +50,11 @@ namespace Service
                 borrow.LimitDate = System.DateTime.Now.AddMonths(3);
                 borrow.ReminderDate = System.DateTime.Now.AddMonths(2).AddDays(25);
                 this.Add(borrow);
+                return true;
             }
             else
             {
-                System.Console.WriteLine("Document already borrowed");
+                return false;
             }
                
         }

@@ -1,45 +1,56 @@
-﻿using System;
-using Data.Infrastructure;
+﻿using PS.Data.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 
-namespace Service
+namespace ServicePattern
 {
     public class Service<TEntity> : IService<TEntity> where TEntity : class
     {
-        static IDataBaseFactory factory = new DataBaseFactory();
-        static IUnitOfWork utwk = new UnitOfWork(factory);
+        
+        private readonly IUnitOfWork utwk ;
+
+        public Service(IUnitOfWork utwk)
+        {
+            this.utwk = utwk;
+        }
+
         public virtual void Add(TEntity entity)
         {
-            utwk.GetRepository<TEntity>().Add(entity);
+            utwk.getRepository<TEntity>().Add(entity);
         }
         public virtual void Update(TEntity entity)
         {
-            utwk.GetRepository<TEntity>().Update(entity);
+            utwk.getRepository<TEntity>().Update(entity);
         }
         public virtual void Delete(TEntity entity)
         {
-            utwk.GetRepository<TEntity>().Delete(entity);
+            utwk.getRepository<TEntity>().Delete(entity);
         }
         public virtual void Delete(Expression<Func<TEntity, bool>> where)
         {
-            utwk.GetRepository<TEntity>().Delete(where);
+            utwk.getRepository<TEntity>().Delete(where);
+        }
+        public virtual TEntity GetById(object id)
+        {
+            return utwk.getRepository<TEntity>().GetById(id);
         }
         public virtual TEntity GetById(int id)
         {
-            return utwk.GetRepository<TEntity>().GetById(id);
+            return utwk.getRepository<TEntity>().GetById(id);
         }
         public virtual TEntity GetById(string id)
         {
-            return utwk.GetRepository<TEntity>().GetById(id);
+            return utwk.getRepository<TEntity>().GetById(id);
         }
         public virtual IEnumerable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter = null)
         {
-            return utwk.GetRepository<TEntity>().GetMany(filter);
+            return utwk.getRepository<TEntity>().GetMany(filter);
         }
         public virtual TEntity Get(Expression<Func<TEntity, bool>> where)
         {
-            return utwk.GetRepository<TEntity>().Get(where);
+            return utwk.getRepository<TEntity>().Get(where);
         }
         public virtual void Dispose()
         {
@@ -51,10 +62,11 @@ namespace Service
             {
                 utwk.Commit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
         }
     }
+
 }

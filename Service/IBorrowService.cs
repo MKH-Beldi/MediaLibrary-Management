@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System.Collections.Generic;
+using ServicePattern;
 
 namespace Service
 {
@@ -7,11 +8,12 @@ namespace Service
     {
         bool Borrowable(Document document);
         IList<Document> GetBorrowables(MediaLibrary mediaLibrary);
-        void Borrow(Document document, Client client);
+        bool Borrow(Document document, Client client);
         void Return(Document document);
         int NbrBorrowsByClient(Client c);
         int NbrBorrowsInProgressByClient(Client c);
         int NbrBorrowsDepositedByClient(Client c);
         int NbrBorrowsByDocument(Document c);
+        bool Borrowed(Document document);
     }
 }

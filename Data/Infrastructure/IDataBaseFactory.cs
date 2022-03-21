@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Data.Infrastructure
+namespace PS.Data.Infrastructure
 {
-    public interface IDataBaseFactory: IDisposable
+    public interface IDataBaseFactory : IDisposable
     {
-        public DbContext DataContext { get; }
+        DbContext DataContext { get; }
     }
 }

@@ -1,11 +1,16 @@
 ﻿using Data.Configurations;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Data
 {
     public class Context: DbContext
     {
+
         public Context() { }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Category> Categories { get; set; }

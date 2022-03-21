@@ -1,27 +1,18 @@
-﻿namespace Data.Infrastructure
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace PS.Data.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {
-        IDataBaseFactory dataBaseFactory;
-
-        public UnitOfWork(IDataBaseFactory dataBaseFactory)
+        readonly IDataBaseFactory _dbFactory;
+        public UnitOfWork(IDataBaseFactory dbFactory) { _dbFactory = dbFactory; }
+        public void Commit() { _dbFactory.DataContext.SaveChanges(); }
+        public IRepositoryBase<T> getRepository<T>() where T : class
         {
-            this.dataBaseFactory = dataBaseFactory;
+            return new RepositoryBase<T>(_dbFactory);
         }
-
-        public void Commit()
-        {
-            dataBaseFactory.DataContext.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            dataBaseFactory.Dispose();
-        }
-
-        public IRepositoryBase<T> GetRepository<T>() where T : class
-        {
-            return new RepositoryBase<T>(dataBaseFactory);
-        }
+        public void Dispose() { _dbFactory.DataContext.Dispose(); }
     }
 }

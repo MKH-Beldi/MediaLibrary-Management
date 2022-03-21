@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System.Collections.Generic;
+using ServicePattern;
 
 namespace Service
 {

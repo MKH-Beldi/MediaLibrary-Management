@@ -1,24 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Infrastructure
+namespace PS.Data.Infrastructure
 {
-    public class DataBaseFactory : IDataBaseFactory
+    public class DataBaseFactory : Disposable, IDataBaseFactory
+
     {
-        private DbContext _dbContext;
-
-        public DbContext DataContext { get { return _dbContext; } }
-
-        public DataBaseFactory()
+        private DbContext dataContext;
+        public DbContext DataContext
         {
-            _dbContext = new Context();
+            get { return dataContext; }
         }
-
-        public void Dispose()
+        public DataBaseFactory() { dataContext = new Context(); }
+        protected override void DisposeCore()
         {
-            _dbContext.Dispose();
+            if (dataContext != null)
+                dataContext.Dispose();
         }
     }
+
 }

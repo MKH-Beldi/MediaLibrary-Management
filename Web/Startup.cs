@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PS.Data.Infrastructure;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,16 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IAudioService, AudioService>()
+                .AddScoped<IBookService, BookService>()
+                .AddScoped<IBorrowService, BorrowService>()
+                .AddScoped<ICategoryService, CategoryService>()
+                .AddScoped<IClientService, ClientService>()
+                .AddScoped<IDocumentService, DocumentService>()
+                .AddScoped<IMediaLibraryService, MediaLibraryService>()
+                .AddScoped<IVideoService, VideoService>()
+             .AddScoped<IUnitOfWork, UnitOfWork>()
+            .AddScoped<IDataBaseFactory, DataBaseFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
