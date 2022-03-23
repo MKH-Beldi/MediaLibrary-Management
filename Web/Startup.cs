@@ -30,14 +30,14 @@ namespace Web
         {
             var hostdb = Configuration["DBHOST"] ?? "localhost";
             var portdb = Configuration["DBPORT"] ?? "3306";
-            var userdb = Configuration["DBUSER"] ?? "root";
+            var userdb = Configuration["DBUSER"] ?? "mkh";
             var passworddb = Configuration["DBPASSWORD"] ?? "95332003";
             services.AddControllersWithViews();
             services.AddDbContextFactory<Context>(
                 options =>
                 {
                     options.UseMySQL($"server={hostdb};user={userdb};pwd={passworddb};"
-                    + $"port={portdb};database=MSSQLLOCALDB");
+                    + $"port={portdb};database=MSDB");
                 });
             services.AddScoped<IAudioService, AudioService>()
                 .AddScoped<IBookService, BookService>()
