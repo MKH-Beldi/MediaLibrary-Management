@@ -1,17 +1,14 @@
 ﻿using Data.Configurations;
 using Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Data
 {
     public class Context: DbContext
     {
-
-        public Context() { }
+   
+        public Context(DbContextOptions<Context> options) : base(options) {
+        }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Document> Documents { get; set; }
@@ -23,7 +20,11 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(@"Data Source= (localDB)\MSSQLLOCALDB; initial catalog = MediaLibraryDB; Integrated security= true ; MultipleActiveResultSets = true");
+
+           
+
+           // optionsBuilder.UseLazyLoadingProxies().UseMySQL($"server={hostdb};port={portdb};database=MSSQLLOCALDB;user={userdb};password={passworddb}"); 
+            //optionsBuilder.UseLazyLoadingProxies().UseSqlServer(@"Data Source= (localDB)\MSSQLLOCALDB; initial catalog = MediaLibraryDB; Integrated security= true ; MultipleActiveResultSets = true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

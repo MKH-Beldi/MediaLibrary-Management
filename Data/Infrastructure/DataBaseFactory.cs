@@ -14,7 +14,7 @@ namespace PS.Data.Infrastructure
         {
             get { return dataContext; }
         }
-        public DataBaseFactory() { dataContext = new Context(); }
+        public DataBaseFactory(DbContext dataContext) { this.dataContext = dataContext; }
         protected override void DisposeCore()
         {
             if (dataContext != null)
