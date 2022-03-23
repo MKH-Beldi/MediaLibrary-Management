@@ -27,7 +27,11 @@ namespace Web.Controllers
 
         public IActionResult Index(string searchTitle)
         {
-            Client client = clientService.GetById(1);
+            // Client client = clientService.GetById(1);
+            Client client = new Client();
+            client.ClientId = 1;
+            client.FirstName = "Mohamad Khalil";
+            client.LastName = "BELDI";
             ViewBag.ClientId = client.ClientId;
             ViewBag.ClientName = client.FirstName + " " + client.LastName;
             if (string.IsNullOrEmpty(searchTitle))
