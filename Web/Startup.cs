@@ -37,7 +37,7 @@ namespace Web
                 options =>
                 {
                     options.UseMySQL($"server={hostdb};user={userdb};pwd={passworddb};"
-                    + $"port={portdb};database=MSDB");
+                    + $"port={portdb};database=medialibrary");
                 });
             services.AddScoped<IAudioService, AudioService>()
                 .AddScoped<IBookService, BookService>()
