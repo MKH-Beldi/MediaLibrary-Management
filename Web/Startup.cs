@@ -31,7 +31,7 @@ namespace Web
             var hostdb = Configuration["DBHOST"] ?? "localhost";
             var portdb = Configuration["DBPORT"] ?? "3306";
             var userdb = Configuration["DBUSER"] ?? "root";
-            var passworddb = Configuration["DBPASSWORD"] ?? "95332003";
+            var passworddb = Configuration["DBPASSWORD"] ?? "";
             services.AddControllersWithViews();
             services.AddDbContextFactory<Context>(
                 options =>

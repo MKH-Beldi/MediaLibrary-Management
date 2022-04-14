@@ -27,16 +27,22 @@ namespace Web.Controllers
 
         public IActionResult Index(string searchTitle)
         {
+
             // Client client = clientService.GetById(1);
-            Client client = new Client();
-            client.ClientId = 1;
-            client.FirstName = "Mohamad Khalil";
-            client.LastName = "BELDI";
-            ViewBag.ClientId = client.ClientId;
-            ViewBag.ClientName = client.FirstName + " " + client.LastName;
+            Client client = clientService.GetMany().FirstOrDefault();
+            if (client == null)
+            {
+                ViewBag.ClientId = 0999;
+                ViewBag.ClientName = "Mohamad Khalil BELDI (Default)";
+            } else
+            {
+                ViewBag.ClientId = client.ClientId;
+                ViewBag.ClientName = client.FirstName + " " + client.LastName;
+            }
+           
             if (string.IsNullOrEmpty(searchTitle))
             {
-                IList<Document> documents = documentService.GetMany(d => d.MediaLibrary.Key == client.MediaLibraryFK).ToList();
+                /*IList<Document> documents = documentService.GetMany(d => d.MediaLibrary.Key == client.MediaLibraryFK).ToList();
                 foreach (var item in documents)
                 {
                     item.NbrBorrows = borrowService.NbrBorrowsByDocument(item);
@@ -44,20 +50,22 @@ namespace Web.Controllers
                         item.Borrowable = true;
                     if (borrowService.Borrowed(item))
                         item.Borrowed = true;
-                }
+                }*/
+                IList<Document> documents = documentService.GetMany().ToList();
                 return View(documents);
             }
             else
             {
-                IList<Document> documents = documentService.GetMany(d => d.Title.Contains(searchTitle)).Where(d => d.MediaLibrary.Key == client.MediaLibraryFK).ToList();
-                foreach (var item in documents)
-                {
-                    item.NbrBorrows = borrowService.NbrBorrowsByDocument(item);
-                    if (borrowService.Borrowable(item))
-                        item.Borrowable = true;
-                    if (borrowService.Borrowed(item))
-                        item.Borrowed = true;
-                }
+                /* IList<Document> documents = documentService.GetMany(d => d.Title.Contains(searchTitle)).Where(d => d.MediaLibrary.Key == client.MediaLibraryFK).ToList();
+                 foreach (var item in documents)
+                 {
+                     item.NbrBorrows = borrowService.NbrBorrowsByDocument(item);
+                     if (borrowService.Borrowable(item))
+                         item.Borrowable = true;
+                     if (borrowService.Borrowed(item))
+                         item.Borrowed = true;
+                 }*/
+                IList<Document> documents = documentService.GetMany(d => d.Title.Contains(searchTitle)).ToList();
                 return View(documents);
             }
             

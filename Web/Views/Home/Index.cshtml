@@ -17,7 +17,7 @@
     </div>
 </div>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Document" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -75,10 +75,10 @@
                 @Html.DisplayFor(modelItem => item.NbrBorrows)
             </td>
             <td>
-                @if (item.Borrowable == true && item.Borrowed == false)
-                {
+              
+          
                 <a asp-action="Create" asp-controller="Borrow" asp-route-idDocument="@item.Key" asp-route-idClient="@ViewBag.ClientId">Borrow</a>
-                }
+              
                 
             </td>
         </tr>
